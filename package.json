@@ -1,0 +1,14 @@
+{
+  "name": "nalivator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Наливатор — автоматичний пристрій для розливу міцних напоїв. Landing + lead capture.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vite": "^5.4.10"
+  }
+}

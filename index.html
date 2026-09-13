@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Наливатор — автоматично. рівно. по-людськи.</title>
+  <meta name="description" content="Наливатор — автоматичний пристрій для розливу міцних напоїв. 3, 5 або 8 чарок. Рівно, швидко, без рук. Залиш заявку — дізнайся першим про старт продажу." />
+  <meta name="theme-color" content="#7a1f14" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Наливатор — автоматичний розлив міцних напоїв" />
+  <meta property="og:description" content="Рівно. Швидко. Без рук. 3, 5 або 8 чарок за раз. Залиш заявку першим." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f8f3ec;
+      --bg-deep: #f0e7db;
+      --ink: #211613;
+      --ink-soft: #5a463d;
+      --amber: #c7781f;
+      --amber-deep: #92490f;
+      --wine: #7a1f14;
+      --wine-deep: #4b120c;
+      --cream: #fffbf5;
+      --line: #e6d9c6;
+      --ok: #2f6b3a;
+      --radius: 18px;
+      --shadow: 0 20px 50px -20px rgba(33, 22, 19, 0.35);
+      --shadow-soft: 0 10px 30px -18px rgba(33, 22, 19, 0.28);
+      --maxw: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    h1, h2, h3, .display {
+      font-family: "Unbounded", system-ui, sans-serif;
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: "Manrope", sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 30px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary {
+      background: var(--wine);
+      color: var(--cream);
+      box-shadow: 0 12px 30px -12px rgba(122, 31, 20, 0.6);
+    }
+    .btn-primary:hover { background: var(--wine-deep); transform: translateY(-2px); box-shadow: 0 18px 40px -14px rgba(122, 31, 20, 0.65); }
+    .btn-amber {
+      background: var(--amber);
+      color: #fff;
+      box-shadow: 0 12px 30px -12px rgba(199, 120, 31, 0.6);
+    }
+    .btn-amber:hover { background: var(--amber-deep); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--line);
+    }
+    .btn-ghost:hover { border-color: var(--ink-soft); background: rgba(255,255,255,0.5); }
+
+    /* ---------- Nav ---------- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(248, 243, 236, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Unbounded", sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .logo .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px rgba(199,120,31,0.18); }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-weight: 600; font-size: 15px; color: var(--ink-soft); }
+    .nav-links a:hover { color: var(--ink); }
+    @media (max-width: 720px) { .nav-links { display: none; } }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      padding: 90px 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px;
+      align-items: center;
+    }
+    @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--amber-deep);
+      background: rgba(199, 120, 31, 0.12);
+      padding: 7px 14px;
+      border-radius: 999px;
+    }
+    .hero h1 { font-size: clamp(36px, 6vw, 62px); margin: 20px 0 20px; }
+    .hero h1 .accent { color: var(--wine); }
+    .hero .sub {
+      font-size: 19px;
+      color: var(--ink-soft);
+      max-width: 460px;
+      margin-bottom: 32px;
+    }
+    .hero .sub strong { color: var(--ink); }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-note { font-size: 13.5px; color: var(--ink-soft); margin-top: 16px; opacity: 0.85; }
+
+    /* Hero visual — stylized dispenser */
+    .hero-art {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .machine {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+    }
+    .machine svg { width: 100%; height: auto; }
+    @media (prefers-reduced-motion: no-preference) {
+      .flow { animation: pour 3.4s ease-in-out infinite; transform-origin: center; }
+      @keyframes pour {
+        0%, 100% { opacity: 0.5; transform: translateY(-2px); }
+        50% { opacity: 1; transform: translateY(2px); }
+      }
+    }
+
+    /* ---------- Strip ---------- */
+    .strip { background: var(--wine); color: var(--cream); padding: 34px 0; }
+    .strip-grid { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+    .strip-item { display: flex; flex-direction: column; gap: 6px; }
+    .strip-item .k { font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.02em; }
+    .strip-item .v { font-size: 14px; opacity: 0.78; letter-spacing: 0.02em; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 80px 0; }
+    .section-head { max-width: 640px; margin-bottom: 44px; }
+    .section-head h2 { font-size: clamp(28px, 4vw, 40px); margin-bottom: 14px; }
+    .section-head p { color: var(--ink-soft); font-size: 17px; margin: 0; }
+
+    /* ---------- How it works ---------- */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    @media (max-width: 820px) { .steps { grid-template-columns: 1fr; } }
+    .step {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px 28px;
+      box-shadow: var(--shadow-soft);
+    }
+    .step .n { font-family: "Unbounded", sans-serif; font-weight: 800; font-size: 15px; color: var(--amber); margin-bottom: 14px; }
+    .step h3 { font-size: 20px; margin-bottom: 10px; }
+    .step p { color: var(--ink-soft); font-size: 15.5px; margin: 0; }
+
+    /* ---------- Versions ---------- */
+    .versions { background: var(--bg-deep); }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 860px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 34px 30px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+    .card.featured { border: 2px solid var(--amber); box-shadow: var(--shadow); }
+    .card .badge {
+      position: absolute;
+      top: -13px; left: 30px;
+      background: var(--amber);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .card .shots {
+      font-family: "Unbounded", sans-serif;
+      font-weight: 800;
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 6px;
+      color: var(--wine);
+    }
+    .card .shots span { font-size: 20px; font-weight: 600; color: var(--ink-soft); }
+    .card .name { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+    .card ul { list-style: none; margin: 0 0 24px; padding: 0; }
+    .card li { font-size: 14.5px; color: var(--ink-soft); padding: 7px 0; border-bottom: 1px solid var(--line); display: flex; gap: 10px; }
+    .card li:last-child { border-bottom: none; }
+    .card li::before { content: "—"; color: var(--amber); font-weight: 700; }
+    .card .cta { margin-top: auto; }
+
+    /* ---------- Why ---------- */
+    .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    @media (max-width: 720px) { .why-grid { grid-template-columns: 1fr; } }
+    .why-item { display: flex; gap: 18px; align-items: flex-start; padding: 26px 24px; background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius); }
+    .why-item .ico { flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; background: rgba(199,120,31,0.14); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+    .why-item h3 { font-size: 18px; margin-bottom: 6px; }
+    .why-item p { color: var(--ink-soft); font-size: 15px; margin: 0; }
+
+    /* ---------- Final CTA / lead form ---------- */
+    .lead {
+      background: linear-gradient(160deg, var(--wine-deep) 0%, var(--wine) 60%, var(--amber-deep) 120%);
+      color: var(--cream);
+      border-radius: 28px;
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .lead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    @media (max-width: 820px) { .lead-grid { grid-template-columns: 1fr; } }
+    .lead h2 { font-size: clamp(28px, 4vw, 40px); margin-bottom: 16px; }
+    .lead .sub { color: rgba(255, 251, 245, 0.82); font-size: 17px; margin-bottom: 8px; }
+    .lead .fine { font-size: 13px; opacity: 0.6; margin-top: 16px; }
+    .form {
+      background: var(--cream);
+      color: var(--ink);
+      border-radius: 22px;
+      padding: 34px 30px;
+      box-shadow: var(--shadow);
+    }
+    .form label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 7px; color: var(--ink-soft); }
+    .form .field { margin-bottom: 18px; }
+    .form input, .form select {
+      width: 100%;
+      font-family: "Manrope", sans-serif;
+      font-size: 16px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+    }
+    .form input:focus, .form select:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(199,120,31,0.18); }
+    .form .btn { width: 100%; }
+    .form-msg { display: none; text-align: center; font-weight: 700; font-size: 15px; margin-top: 16px; }
+    .form-msg.ok { display: block; color: var(--ok); }
+    .form-msg.err { display: block; color: #b3261e; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+    footer .mailto { color: var(--amber-deep); font-weight: 600; }
+    .tagline { margin-top: 8px; font-size: 13px; opacity: 0.7; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Nav ===== -->
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo"><span class="dot"></span>Наливатор</div>
+      <div class="nav-links">
+        <a href="#how" data-ga="nav-how">Як це працює</a>
+        <a href="#versions" data-ga="nav-versions">Версії</a>
+        <a href="#why" data-ga="nav-why">Чому ми</a>
+        <a href="#lead" class="btn btn-primary" style="padding:10px 22px;font-size:14px;" data-ga="nav-cta">Залишити заявку</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Запуск продажу незабаром</span>
+        <h1>Наливатор.<br /><span class="accent">Рівно. Швидко. Без рук.</span></h1>
+        <p class="sub">Автоматичний пристрій, який сам розливає міцні напої по чарках — <strong>рівно, до міліметра, за секунди</strong>. Поставив пляшку, натиснув кнопку — готово.</p>
+        <div class="hero-cta">
+          <a href="#lead" class="btn btn-primary" data-ga="hero-cta">Хочу першим 🥃</a>
+          <a href="#versions" class="btn btn-ghost" data-ga="hero-versions">Подивитись версії</a>
+        </div>
+        <p class="hero-note">Без передоплати. Заявка — просто знак, що тобі цікаво.</p>
+      </div>
+      <div class="hero-art">
+        <div class="machine">
+          <svg viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Схема наливатора">
+            <!-- bottle -->
+            <rect x="150" y="30" width="100" height="40" rx="8" fill="#4b120c"/>
+            <path d="M170 70 L170 140 C170 150 230 150 230 140 L230 70 Z" fill="#7a1f14"/>
+            <!-- spout -->
+            <rect x="188" y="140" width="24" height="26" rx="4" fill="#92490f"/>
+            <!-- flow -->
+            <g class="flow">
+              <rect x="196" y="166" width="8" height="46" rx="4" fill="#c7781f" opacity="0.9"/>
+            </g>
+            <!-- base -->
+            <rect x="110" y="212" width="180" height="26" rx="13" fill="#241813"/>
+            <!-- shots -->
+            <rect x="120" y="252" width="40" height="30" rx="6" fill="#c7781f" opacity="0.9"/>
+            <rect x="180" y="252" width="40" height="30" rx="6" fill="#e0a04a" opacity="0.9"/>
+            <rect x="240" y="252" width="40" height="30" rx="6" fill="#c7781f" opacity="0.9"/>
+            <!-- platform -->
+            <rect x="104" y="296" width="192" height="12" rx="6" fill="#241813"/>
+            <rect x="120" y="308" width="160" height="10" rx="5" fill="#3a2822"/>
+            <!-- label -->
+            <text x="200" y="388" text-anchor="middle" font-family="Unbounded, sans-serif" font-size="17" font-weight="700" fill="#211613">НАЛИВАТОР</text>
+            <text x="200" y="408" text-anchor="middle" font-family="Manrope, sans-serif" font-size="12" fill="#5a463d">набір: 3 · 5 · 8 чарок</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Strip ===== -->
+  <div class="strip">
+    <div class="container strip-grid">
+      <div class="strip-item"><span class="k">±0 мл</span><span class="v">розбіжність дози</span></div>
+      <div class="strip-item"><span class="k">3 сек</span><span class="v">на один розлив</span></div>
+      <div class="strip-item"><span class="k">3 / 5 / 8</span><span class="v">чарок за раз</span></div>
+      <div class="strip-item"><span class="k">3D-друк</span><span class="v">корпус будь-якої форми</span></div>
+    </div>
+  </div>
+
+  <!-- ===== How it works ===== -->
+  <section id="how">
+    <div class="container">
+      <div class="section-head">
+        <h2>Як це працює</h2>
+        <p>Ніякої магії — механіка плюс точне дозування. Всю нудну роботу робить пристрій.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="n">01</div>
+          <h3>Ставиш пляшку</h3>
+          <p>Відкриваєш, ставиш на місце. Ніякої ручної наливки, нічого не проливається.</p>
+        </div>
+        <div class="step">
+          <div class="n">02</div>
+          <h3>Обираєш дозу</h3>
+          <p>Вказуєш об'єм на чарку — пристрій розливає все однаково, до міліметра.</p>
+        </div>
+        <div class="step">
+          <div class="n">03</div>
+          <h3>Тиск — і готово</h3>
+          <p>Всі чарки наповнюються одночасно та рівно. Більше часу на гостей, менше на наливання.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Versions ===== -->
+  <section id="versions" class="versions">
+    <div class="container">
+      <div class="section-head">
+        <h2>Лишилось обрати розмір</h2>
+        <p>Три версії під різні компанії. Корпус друкується на 3D-принтері — тому форма й деталі можуть бути будь-якими.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="shots">3 <span>чарки</span></div>
+          <div class="name">Наливатор Mini</div>
+          <ul>
+            <li>Для тісної компанії</li>
+            <li>Компактний, легко ховається</li>
+            <li>Мінімальна ціна</li>
+          </ul>
+          <a href="#lead" class="btn btn-ghost cta" data-ga="version-3" data-model="3">Обрати Mini</a>
+        </div>
+        <div class="card featured">
+          <div class="badge">Хіт продажу</div>
+          <div class="shots">5 <span>чарок</span></div>
+          <div class="name">Наливатор Classic</div>
+          <ul>
+            <li>Оптимально для вечірок</li>
+            <li>Баланс ціни та місткості</li>
+            <li>Найпопулярніший варіант</li>
+          </ul>
+          <a href="#lead" class="btn btn-amber cta" data-ga="version-5" data-model="5">Обрати Classic</a>
+        </div>
+        <div class="card">
+          <div class="shots">8 <span>чарок</span></div>
+          <div class="name">Наливатор Max</div>
+          <ul>
+            <li>Для великих застіль</li>
+            <li>Максимум посадочних місць</li>
+            <li>Солідний розмір</li>
+          </ul>
+          <a href="#lead" class="btn btn-ghost cta" data-ga="version-8" data-model="8">Обрати Max</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Why ===== -->
+  <section id="why">
+    <div class="container">
+      <div class="section-head">
+        <h2>Чому Наливатор</h2>
+        <p>Бо наливати вручну — це минуле століття.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item"><div class="ico">🎯</div><div><h3>Рівно, а не «на око»</h3><p>Кожна чарка однакова. Ніхто не скаже, що йому «недолили».</p></div></div>
+        <div class="why-item"><div class="ico">⚡</div><div><h3>Швидко</h3><p>Весь розлив за секунди, а не хвилини біля пляшки.</p></div></div>
+        <div class="why-item"><div class="ico">🧊</div><div><h3>Без проливів</h3><p>Стіл чистий, руки чисті, настрій цілий.</p></div></div>
+        <div class="why-item"><div class="ico">🎨</div><div><h3>Корпус — на 3D-принтері</h3><p>Форма будь-яка: під інтер'єр, під бренд, під твій смак.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Lead ===== -->
+  <section id="lead" style="padding-top:0;">
+    <div class="container">
+      <div class="lead">
+        <div class="lead-grid">
+          <div>
+            <h2>Будь першим у черзі</h2>
+            <p class="sub">Ми готуємо першу партію. Залиш заявку — і першим дізнаєшся про старт продажу та отримаєш найкращу ціну.</p>
+            <p class="fine">Твої дані — лише для зв'язку з тобою. Ніякого спаму, обіцяємо.</p>
+          </div>
+          <form class="form" id="lead-form" novalidate>
+            <div class="field">
+              <label for="f-name">Ім'я</label>
+              <input type="text" id="f-name" name="name" placeholder="Як до тебе звертатись" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="f-contact">Телефон або Telegram</label>
+              <input type="text" id="f-contact" name="contact" placeholder="+380… або @нік" required autocomplete="tel" />
+            </div>
+            <div class="field">
+              <label for="f-model">Яка версія цікавить?</label>
+              <select id="f-model" name="model">
+                <option value="tbd">Поки не вирішив(ла)</option>
+                <option value="3">Mini — 3 чарки</option>
+                <option value="5">Classic — 5 чарок</option>
+                <option value="8">Max — 8 чарок</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" data-ga="lead-submit">Залишити заявку 🥃</button>
+            <div class="form-msg ok" id="form-ok">Дякуємо! Ти в списку перших. 🎉</div>
+            <div class="form-msg err" id="form-err">Помилка. Спробуй ще раз або напиши нам напряму.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <div class="logo" style="justify-content:center;margin-bottom:12px;"><span class="dot"></span>Наливатор</div>
+      <div>Питання? <a class="mailto" href="mailto:nalivator.ua@gmail.com" data-ga="footer-mail">nalivator.ua@gmail.com</a></div>
+      <div class="tagline">© 2026 Наливатор · Зроблено з любов'ю до рівної чарки.</div>
+    </div>
+  </footer>
+
+  <script type="module">
+    // ===== Analytics =====
+    // Lightweight event bus: fires a `track` on every meaningful interaction.
+    // Wire this to your analytics backend (GA4, Plausible, PostHog, etc.) by
+    // replacing the stub below — or keep it and read events from logs.
+    const ANALYTICS_ENDPOINT = window.__NALIVATOR_ANALYTICS__ || null;
+
+    function track(event, props = {}) {
+      const payload = { event, props, ts: Date.now(), href: location.href };
+      if (ANALYTICS_ENDPOINT) {
+        fetch(ANALYTICS_ENDPOINT, {
+          method: "POST",
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        }).catch(() => {});
+      }
+      // Fallback: always log for server-side observability.
+      console.debug("[track]", event, props);
+      // Push to any global dataLayer (GA4-friendly) if present.
+      if (window.dataLayer) window.dataLayer.push({ event, ...props });
+    }
+
+    // Track all elements carrying data-ga.
+    document.querySelectorAll("[data-ga]").forEach((el) => {
+      el.addEventListener("click", () => {
+        const props = el.dataset.model ? { model: el.dataset.model } : {};
+        track(el.dataset.ga, props);
+      });
+    });
+
+    // Track section visibility (scroll into view) for a fuller funnel.
+    const seen = new Set();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !seen.has(e.target.id)) {
+          seen.add(e.target.id);
+          track("view_section", { section: e.target.id || "unnamed" });
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll("section[id], header").forEach((s) => observer.observe(s));
+
+    // ===== Lead capture =====
+    const form = document.getElementById("lead-form");
+    const okEl = document.getElementById("form-ok");
+    const errEl = document.getElementById("form-err");
+
+    // Pre-select model if a version card was clicked (carried over).
+    const params = new URLSearchParams(location.search);
+    if (params.get("model")) {
+      const sel = document.getElementById("f-model");
+      if ([...sel.options].some((o) => o.value === params.get("model"))) {
+        sel.value = params.get("model");
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      okEl.classList.remove("ok");
+      errEl.classList.remove("err");
+      const contact = document.getElementById("f-contact").value.trim();
+      const name = document.getElementById("f-name").value.trim();
+      const model = document.getElementById("f-model").value;
+
+      if (contact.length < 3) {
+        errEl.textContent = "Вкажи телефон або Telegram, будь ласка.";
+        errEl.classList.add("err");
+        return;
+      }
+
+      const btn = form.querySelector("button[type=submit]");
+      btn.disabled = true;
+      btn.textContent = "Надсилаємо…";
+
+      try {
+        const res = await fetch("/api/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, contact, model }),
+        });
+        if (!res.ok) throw new Error("bad status");
+        track("lead_converted", { model });
+        okEl.classList.add("ok");
+        form.reset();
+      } catch {
+        errEl.classList.add("err");
+        track("lead_error");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Залишити заявку 🥃";
+      }
+    });
+  </script>
+</body>
+</html>
